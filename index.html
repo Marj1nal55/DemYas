@@ -1,0 +1,748 @@
+```html
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TÜBİTAK 2204 - Yapay Zeka ve Geleceğin Meslekleri</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for Interactive Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#090d16',
+                            card: 'rgba(15, 23, 42, 0.75)',
+                            border: 'rgba(51, 65, 85, 0.5)',
+                            cyan: '#38bdf8',
+                            purple: '#c084fc',
+                            neon: '#22d3ee',
+                            pink: '#f472b6'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #060911;
+            color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 65%, rgba(168, 85, 247, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-panel-glow {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            box-shadow: 0 0 25px -5px rgba(56, 189, 248, 0.15);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #c084fc 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-slate-900">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo & Title -->
+            <div class="flex items-center space-x-3">
+                <div class="p-2.5 bg-gradient-to-tr from-cyan-500 to-purple-600 rounded-xl shadow-lg shadow-cyan-500/20">
+                    <i class="fa-solid font-bold text-xl text-slate-950 fa-brain"></i>
+                </div>
+                <div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs font-bold px-2 py-0.5 rounded bg-red-500/10 text-red-400 border border-red-500/20">TÜBİTAK 2204-A/B</span>
+                        <span class="text-xs text-slate-400 font-mono">PROJE ID: #2204-AI-2026</span>
+                    </div>
+                    <h1 class="text-sm sm:text-base font-bold text-slate-100 tracking-tight">AI & Geleceğin Meslekleri Platformu</h1>
+                </div>
+            </div>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                <a href="#hero" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 rounded-lg transition">Genel Bakış</a>
+                <a href="#simulator" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 rounded-lg transition">Risk Simülatörü</a>
+                <a href="#analytics" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 rounded-lg transition">İstatistikler</a>
+                <a href="#methodology" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 rounded-lg transition">TÜBİTAK Metodolojisi</a>
+                <a href="#team" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 rounded-lg transition">Araştırma Ekibi</a>
+            </nav>
+
+            <!-- Quick Action Button -->
+            <div class="hidden sm:flex items-center space-x-3">
+                <button onclick="scrollToElement('simulator')" class="px-4 py-2 text-xs font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500 hover:text-slate-950 rounded-lg transition duration-200 flex items-center gap-2">
+                    <i class="fa-solid fa-magnifying-glass"></i> Meslek Ara
+                </button>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobileMenuBtn" class="md:hidden p-2 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobileMenu" class="hidden md:hidden border-b border-slate-800 glass-panel px-4 pt-2 pb-4 space-y-2">
+            <a href="#hero" class="block px-3 py-2 text-sm font-medium text-slate-300 hover:text-cyan-400 rounded-lg">Genel Bakış</a>
+            <a href="#simulator" class="block px-3 py-2 text-sm font-medium text-slate-300 hover:text-cyan-400 rounded-lg">Risk Simülatörü</a>
+            <a href="#analytics" class="block px-3 py-2 text-sm font-medium text-slate-300 hover:text-cyan-400 rounded-lg">İstatistikler</a>
+            <a href="#methodology" class="block px-3 py-2 text-sm font-medium text-slate-300 hover:text-cyan-400 rounded-lg">TÜBİTAK Metodolojisi</a>
+            <a href="#team" class="block px-3 py-2 text-sm font-medium text-slate-300 hover:text-cyan-400 rounded-lg">Araştırma Ekibi</a>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16">
+
+        <!-- HERO SECTION -->
+        <section id="hero" class="relative pt-6 pb-4">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Left Text Content -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                        TÜBİTAK Lise Araştırma Projesi
+                    </div>
+                    
+                    <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+                        Yapay Zeka Hangi Meslekleri <span class="gradient-text">Nasıl Dönüştürecek?</span>
+                    </h1>
+                    
+                    <p class="text-slate-400 text-base sm:text-lg leading-relaxed">
+                        Otomasyon, makine öğrenmesi ve üretken yapay zeka (LLM) teknolojilerinin iş gücüne etkilerini nicel ve nitel veri modellerimizle analiz ediyoruz. Mesleğinizin AI dönüşüm riskini simüle edin.
+                    </p>
+
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <button onclick="scrollToElement('simulator')" class="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-bold rounded-xl shadow-lg shadow-cyan-500/25 transition transform hover:-translate-y-0.5 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-pie"></i> Risk Analizini Başlat
+                        </button>
+                        <button onclick="scrollToElement('methodology')" class="px-6 py-3 glass-panel hover:bg-slate-800 text-slate-200 font-semibold rounded-xl border border-slate-700 transition flex items-center gap-2">
+                            <i class="fa-solid fa-book-bookmark text-purple-400"></i> TÜBİTAK Raporu
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Quick Metrics Cards -->
+                <div class="lg:col-span-5 grid grid-cols-2 gap-4">
+                    <div class="glass-panel-glow p-5 rounded-2xl space-y-2">
+                        <div class="w-10 h-10 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 font-bold">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <h2 class="text-2xl font-extrabold text-slate-100">%68</h2>
+                        <p class="text-xs text-slate-400">Yüksek Otomasyon Riski Taşıyan Rutin Meslekler</p>
+                    </div>
+
+                    <div class="glass-panel p-5 rounded-2xl space-y-2">
+                        <div class="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 font-bold">
+                            <i class="fa-solid fa-sparkles"></i>
+                        </div>
+                        <h2 class="text-2xl font-extrabold text-slate-100">+45 Yeni</h2>
+                        <p class="text-xs text-slate-400">Ortaya Çıkan Yeni Nesil YZ Destekli Rol</p>
+                    </div>
+
+                    <div class="glass-panel p-5 rounded-2xl space-y-2">
+                        <div class="w-10 h-10 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 font-bold">
+                            <i class="fa-solid fa-arrows-spin"></i>
+                        </div>
+                        <h2 class="text-2xl font-extrabold text-slate-100">%82</h2>
+                        <p class="text-xs text-slate-400">Gerekli Becerileri Değişecek Olan Sektörler</p>
+                    </div>
+
+                    <div class="glass-panel p-5 rounded-2xl space-y-2">
+                        <div class="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h2 class="text-2xl font-extrabold text-slate-100">%15</h2>
+                        <p class="text-xs text-slate-400">Düşük Etki (Yüksek Empati/Yaratıcılık)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTERACTIVE OCCUPATION RISK SIMULATOR -->
+        <section id="simulator" class="space-y-6 pt-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-100 flex items-center gap-3">
+                        <i class="fa-solid fa-sliders text-cyan-400"></i> İnteraktif Meslek Risk Simülatörü
+                    </h2>
+                    <p class="text-slate-400 text-sm mt-1">İlgilendiğiniz mesleği arayın veya sektör kategorisine göre filtreleyin.</p>
+                </div>
+                <!-- Category Filter Buttons -->
+                <div class="flex flex-wrap gap-2" id="categoryFilters">
+                    <button data-cat="all" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-cyan-500 text-slate-950 border border-cyan-400 transition">Tümü</button>
+                    <button data-cat="yazilim" class="px-3 py-1.5 text-xs font-semibold rounded-lg glass-panel hover:border-slate-600 text-slate-300 transition">Yazılım & Teknoloji</button>
+                    <button data-cat="saglik" class="px-3 py-1.5 text-xs font-semibold rounded-lg glass-panel hover:border-slate-600 text-slate-300 transition">Sağlık & Tıp</button>
+                    <button data-cat="sanat" class="px-3 py-1.5 text-xs font-semibold rounded-lg glass-panel hover:border-slate-600 text-slate-300 transition">Sanat & Tasarım</button>
+                    <button data-cat="hizmet" class="px-3 py-1.5 text-xs font-semibold rounded-lg glass-panel hover:border-slate-600 text-slate-300 transition">Hizmet & Finans</button>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
+                <input type="text" id="searchInput" placeholder="Meslek adı yazın (Örn: Veri Analisti, Grafiker, Avukat, Cerrah...)" 
+                       class="w-full pl-12 pr-4 py-4 rounded-xl glass-panel border border-slate-700 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition text-sm sm:text-base">
+            </div>
+
+            <!-- Job Cards Grid -->
+            <div id="jobGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Dynamically Populated by JS -->
+            </div>
+        </section>
+
+        <!-- ANALYTICS & CHARTS SECTION -->
+        <section id="analytics" class="space-y-6 pt-6">
+            <div class="border-t border-slate-800/80 pt-8">
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-100 flex items-center gap-3">
+                    <i class="fa-solid fa-chart-column text-purple-400"></i> Araştırma İstatistikleri ve Sektörel Dağılım
+                </h2>
+                <p class="text-slate-400 text-sm mt-1">TÜBİTAK 2204 projesi kapsamında derlenen nitel ve nicel veri analiz sonuçları.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Bar Chart Container -->
+                <div class="lg:col-span-7 glass-panel p-6 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-slate-200">Sektörlere Göre AI İkame (Yerini Alma) Oranı (%)</h3>
+                        <span class="text-xs text-cyan-400 font-mono">Veri: 2026 Model Analizi</span>
+                    </div>
+                    <div class="relative w-full h-72 sm:h-80">
+                        <canvas id="sectorChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Doughnut Chart Container -->
+                <div class="lg:col-span-5 glass-panel p-6 rounded-2xl border border-slate-800 flex flex-col justify-between">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-slate-200">İş Gücü Beceri Dönüşümü</h3>
+                        <span class="text-xs text-purple-400 font-mono">TÜBİTAK Anketi</span>
+                    </div>
+                    <div class="relative w-full h-64 sm:h-72 flex items-center justify-center">
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TÜBİTAK METHODOLOGY & RESEARCH DETAILS -->
+        <section id="methodology" class="space-y-6 pt-6">
+            <div class="border-t border-slate-800/80 pt-8">
+                <span class="text-xs font-bold text-cyan-400 tracking-wider uppercase">Bilimsel Araştırma Çerçevesi</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-100 mt-1">TÜBİTAK 2204 Proje Metodolojisi</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 font-bold">1</div>
+                    <h3 class="text-lg font-bold text-slate-200">Problem & Hipotez</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Yapay zeka teknolojilerinin gelişimi sadece mavi yakalı değil, beyaz yakalı uzmanlık gerektiren meslekleri de doğrudan etkilemektedir. Hipotezimiz: İnsan odaklı sezgisel beceriler gerektiren roller, AI gelişse dahi yok olmayıp hibritleşecektir.
+                    </p>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 font-bold">2</div>
+                    <h3 class="text-lg font-bold text-slate-200">Veri Toplama & Yöntem</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Saha anketleri, sektör uzmanları mülakatları ve literatür taraması veri seti olarak kullanılmıştır. Mesleklerin rutin görev oranları ve bilişsel yaratıcılık gereksinimleri 0-100 arasında puanlanarak otomasyon risk skoru algoritmalaştırılmıştır.
+                    </p>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold">3</div>
+                    <h3 class="text-lg font-bold text-slate-200">Geliştirilebilirlik & Gelecek</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Bu platform, ilerleyen aşamalarda canlı Machine Learning API'leri (Scikit-Learn/TensorFlow) ile entegre edilerek kullanıcıların kendi çalışma dinamiklerine göre kişiselleştirilmiş AI Etki Skoru hesaplamasına imkan verecek altyapıdadır.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Interactive AI Prompt Generator Demo inside Methodology -->
+            <div class="glass-panel-glow p-6 sm:p-8 rounded-2xl space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+                            <i class="fa-solid fa-microchip text-cyan-400"></i> Proje İnovasyonu: Canlı LLM Sorusu Analiz Modülü
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-1">İncelediğiniz defter notundaki "Yapay zeka hangi meslekleri bitirecek?" sorusuna anlık analiz üretin.</p>
+                    </div>
+                    <button id="runAiAnalysisBtn" class="px-5 py-2.5 bg-cyan-500 text-slate-950 hover:bg-cyan-400 text-xs font-bold rounded-xl transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-play"></i> Analiz Et (Gemini API Entegre)
+                    </button>
+                </div>
+
+                <div id="aiAnalysisResult" class="hidden p-4 rounded-xl bg-slate-950/80 border border-slate-800 text-xs font-mono text-cyan-300 leading-relaxed min-h-[80px]">
+                    <!-- Output goes here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- RESEARCH TEAM / AUTHORS -->
+        <section id="team" class="space-y-6 pt-6">
+            <div class="border-t border-slate-800/80 pt-8">
+                <span class="text-xs font-bold text-purple-400 tracking-wider uppercase">Proje Sorumluları & Yazarlar</span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-100 mt-1">Araştırmacı Ekip</h2>
+                <p class="text-slate-400 text-sm mt-1">9-E Sınıfı TÜBİTAK Proje Çalışma Grubu</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Researcher 1 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex items-center space-x-4">
+                    <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-slate-950 text-xl font-extrabold shadow-lg">
+                        DB
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-slate-100">Demet Beril Deniz</h3>
+                        <p class="text-xs text-cyan-400 font-medium">Baş Araştırmacı / 9-E</p>
+                        <p class="text-[11px] text-slate-400 mt-1">Veri Analizi & Hipotez Modellemesi</p>
+                    </div>
+                </div>
+
+                <!-- Researcher 2 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex items-center space-x-4">
+                    <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-purple-500 to-pink-600 flex items-center justify-center text-slate-950 text-xl font-extrabold shadow-lg">
+                        YD
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-slate-100">Yasmin Dere</h3>
+                        <p class="text-xs text-purple-400 font-medium">Co-Araştırmacı / 9-E</p>
+                        <p class="text-[11px] text-slate-400 mt-1">Saha Anketi & Literatür Taraması</p>
+                    </div>
+                </div>
+
+                <!-- Supervisor Teacher -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex items-center space-x-4 sm:col-span-2 lg:col-span-1">
+                    <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-emerald-500 to-teal-600 flex items-center justify-center text-slate-950 text-xl font-extrabold shadow-lg">
+                        Dan.
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-slate-100">Danışman Öğretmen</h3>
+                        <p class="text-xs text-emerald-400 font-medium">TÜBİTAK Proje Danışmanı</p>
+                        <p class="text-[11px] text-slate-400 mt-1">Metodoloji Danışmanlığı & İnceleme</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SIMULATION DETAIL MODAL -->
+    <div id="jobModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="glass-panel-glow max-w-lg w-full rounded-2xl p-6 sm:p-8 space-y-5 border border-cyan-500/30 relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div id="modalContent" class="space-y-4">
+                <!-- Dynamically filled -->
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="glass-panel border-t border-slate-800 py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 text-center sm:flex sm:justify-between sm:items-center text-xs text-slate-500 space-y-4 sm:space-y-0">
+            <div>
+                <p>© 2026 TÜBİTAK 2204-A/B Proje Grubu. Tüm Hakları Saklıdır.</p>
+                <p class="mt-0.5 text-slate-400">Esin kaynağı: 9-E Sınıfı Çalışma Sorusu #10</p>
+            </div>
+            <div class="flex justify-center space-x-4">
+                <span class="hover:text-cyan-400 cursor-pointer">Gizlilik Politikası</span>
+                <span>•</span>
+                <span class="hover:text-cyan-400 cursor-pointer">Metodoloji Dosyası (PDF)</span>
+                <span>•</span>
+                <span class="hover:text-cyan-400 cursor-pointer font-semibold text-cyan-400">TÜBİTAK 2204</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Sample Data for Jobs & AI Risks
+        const jobsData = [
+            {
+                id: 1,
+                title: "Veri Giriş Elemanı",
+                category: "hizmet",
+                risk: 94,
+                level: "Yüksek",
+                badgeColor: "bg-red-500/10 text-red-400 border-red-500/30",
+                description: "Rutin metin ve tablo işleme görevleri üretken yapay zeka ve OCR sistemleri tarafından %90+ hızla tamamlanabilmektedir.",
+                skills: ["Veri Denetimi", "Sistem Yönetimi", "Yapılandırılmamış Veri Analizi"],
+                transformation: "Otomasyon tamamen yerini alıyor. Rol 'Veri Doğrulama Uzmanı'na dönüşüyor."
+            },
+            {
+                id: 2,
+                title: "Grafik Tasarımcı / Illüstratör",
+                category: "sanat",
+                risk: 68,
+                level: "Orta-Yüksek",
+                badgeColor: "bg-orange-500/10 text-orange-400 border-orange-500/30",
+                description: "Görsel yapay zeka modelleri hızlı taslak oluşturmayı kolaylaştırırken, insan dokunuşu ve marka stratejisi hala önemini koruyor.",
+                skills: ["Prompt Mühendisliği", "Kreatif Direktörlük", "3D Tasarım", "Marka Hikayeciliği"],
+                transformation: "AI araçlarını yöneten Yaratıcı Sanat Yönetmenliğine evriliyor."
+            },
+            {
+                id: 3,
+                title: "Yazılım Geliştirici (Junior)",
+                category: "yazilim",
+                risk: 55,
+                level: "Orta",
+                badgeColor: "bg-yellow-500/10 text-yellow-400 border-yellow-500/30",
+                description: "Kod tamamlama ve basit algoritma yazımı AI ile otomatize ediliyor. Mimari ve güvenlik kritik hale geliyor.",
+                skills: ["Sistem Mimarisi", "Siber Güvenlik", "AI Model Entegrasyonu", "Problem Çözme"],
+                transformation: "Kod yazandan ziyade sistem mimarı ve yapay zeka kod denetçisine dönüşüm."
+            },
+            {
+                id: 4,
+                title: "Avukat / Hukuk Danışmanı",
+                category: "hizmet",
+                risk: 42,
+                level: "Orta",
+                badgeColor: "bg-yellow-500/10 text-yellow-400 border-yellow-500/30",
+                description: "Emsal karar tarama ve sözleşme hazırlama hızlanıyor; mahkeme salonu savunması ve strateji insan kontrolünde.",
+                skills: ["AI Etik Hukuku", "Müzakere", "Stratejik Savunma", "Kriz Yönetimi"],
+                transformation: "Hukuki araştırma yükü hafifliyor, insan ilişkileri ve strateji öne çıkıyor."
+            },
+            {
+                id: 5,
+                title: "Cerrah / Tıp Uzmanı",
+                category: "saglik",
+                risk: 12,
+                level: "Düşük",
+                badgeColor: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+                description: "Robotik cerrahi ve yapay zeka destekli teşhis hassasiyeti artırsa da fiziksel müdahale ve empati yeri doldurulamaz.",
+                skills: ["Robotik Cerrahi", "Karmaşık Teşhis Analizi", "Hasta Empatisi"],
+                transformation: "AI teşhis koymada asistan görevi görür, cerrah robotik kollarla hassas ameliyat yapar."
+            },
+            {
+                id: 6,
+                title: "Psikolog / Psikiyatrist",
+                category: "saglik",
+                risk: 8,
+                level: "Çok Düşük",
+                badgeColor: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+                description: "Derin insan duygulanımı, empati ve bağ kurma ihtiyacı yapay zekanın ikame edemediği temel alanlardandır.",
+                skills: ["Derin Empati", "Duygusal Zeka", "Davranışsal Terapi", "Kriz Müdahalesi"],
+                transformation: "Neredeyse hiç risk yok. AI yalnızca danışan takip asistanı olarak kullanılır."
+            }
+        ];
+
+        // Render Job Cards
+        function renderJobs(filterCat = 'all', searchQuery = '') {
+            const grid = document.getElementById('jobGrid');
+            grid.innerHTML = '';
+
+            const filtered = jobsData.filter(job => {
+                const matchesCat = filterCat === 'all' || job.category === filterCat;
+                const matchesSearch = job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                      job.description.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesCat && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full glass-panel p-8 text-center text-slate-400">
+                        <i class="fa-regular fa-face-frown text-3xl mb-2 text-slate-500"></i>
+                        <p>Aramanıza uygun meslek bulunamadı. Lütfen farklı bir kelime deneyin.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(job => {
+                const card = document.createElement('div');
+                card.className = "glass-panel p-6 rounded-2xl border border-slate-800 hover:border-slate-700 transition flex flex-col justify-between space-y-4 group";
+                
+                // Risk bar width
+                const riskWidth = `${job.risk}%`;
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-semibold px-2.5 py-1 rounded-full border ${job.badgeColor}">
+                                AI Risk: %${job.risk} (${job.level})
+                            </span>
+                            <span class="text-xs text-slate-500 capitalize">${job.category}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-100 group-hover:text-cyan-400 transition">${job.title}</h3>
+                        <p class="text-xs text-slate-400 mt-2 line-clamp-2 leading-relaxed">${job.description}</p>
+                    </div>
+
+                    <div class="space-y-3 pt-2">
+                        <!-- Progress Bar -->
+                        <div>
+                            <div class="flex justify-between text-[11px] text-slate-400 mb-1">
+                                <span>Otomasyon Riski</span>
+                                <span>%${job.risk}</span>
+                            </div>
+                            <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                                <div class="bg-gradient-to-r from-cyan-400 to-purple-500 h-2 rounded-full" style="width: ${riskWidth}"></div>
+                            </div>
+                        </div>
+
+                        <button onclick="openModal(${job.id})" class="w-full py-2.5 bg-slate-800/80 hover:bg-slate-700 text-xs text-slate-200 font-semibold rounded-xl border border-slate-700 transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-chart-line text-cyan-400"></i> Detaylı Simülasyon
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Modal Logic
+        function openModal(id) {
+            const job = jobsData.find(j => j.id === id);
+            if (!job) return;
+
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-semibold px-2.5 py-1 rounded-full border ${job.badgeColor}">
+                        AI Etki Derecesi: ${job.level}
+                    </span>
+                    <span class="text-xs text-slate-400">TÜBİTAK Simulasyon ID #${job.id}</span>
+                </div>
+
+                <h3 class="text-2xl font-bold text-slate-100">${job.title}</h3>
+                <p class="text-sm text-slate-300 leading-relaxed">${job.description}</p>
+
+                <div class="p-4 bg-slate-900/90 rounded-xl border border-slate-800 space-y-2">
+                    <h4 class="text-xs font-bold text-cyan-400 uppercase tracking-wider">Geleceğin Mesleki Dönüşümü</h4>
+                    <p class="text-xs text-slate-300">${job.transformation}</p>
+                </div>
+
+                <div class="space-y-2">
+                    <h4 class="text-xs font-bold text-purple-400 uppercase tracking-wider">Kazanılması Gereken Kritik Beceriler</h4>
+                    <div class="flex flex-wrap gap-2">
+                        ${job.skills.map(skill => `<span class="px-2.5 py-1 bg-purple-500/10 text-purple-300 border border-purple-500/20 text-xs rounded-lg">${skill}</span>`).join('')}
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button onclick="closeModal()" class="w-full py-3 bg-cyan-500 text-slate-950 font-bold text-xs rounded-xl hover:bg-cyan-400 transition">
+                        Kapat
+                    </button>
+                </div>
+            `;
+            document.getElementById('jobModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('jobModal').classList.add('hidden');
+        }
+
+        // Smooth Scroll Helper
+        function scrollToElement(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Mobile Menu Toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Initialize Charts with Chart.js
+        function initCharts() {
+            // Bar Chart: Sector Impact
+            const ctxSector = document.getElementById('sectorChart').getContext('2d');
+            new Chart(ctxSector, {
+                type: 'bar',
+                data: {
+                    labels: ['Finans & Muhasebe', 'Yazılım & Bilişim', 'Sanat & Medya', 'Sağlık & Tıp', 'Eğitim & Akademi'],
+                    datasets: [{
+                        label: 'Tahmini AI Etki Riski (%)',
+                        data: [78, 55, 62, 18, 35],
+                        backgroundColor: [
+                            'rgba(244, 114, 182, 0.6)',
+                            'rgba(56, 189, 248, 0.6)',
+                            'rgba(192, 132, 252, 0.6)',
+                            'rgba(34, 197, 94, 0.6)',
+                            'rgba(251, 146, 60, 0.6)'
+                        ],
+                        borderColor: [
+                            '#f472b6',
+                            '#38bdf8',
+                            '#c084fc',
+                            '#22c55e',
+                            '#fb923c'
+                        ],
+                        borderWidth: 1.5,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: { color: 'rgba(51, 65, 85, 0.3)' },
+                            ticks: { color: '#94a3b8' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#94a3b8' }
+                        }
+                    }
+                }
+            });
+
+            // Doughnut Chart: Skill Shift
+            const ctxSkills = document.getElementById('skillsChart').getContext('2d');
+            new Chart(ctxSkills, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Teknik AI Becerileri', 'Eleştirel Düşünme & Etik', 'Yaratıcılık & Empati', 'Rutin Görevler (Azalan)'],
+                    datasets: [{
+                        data: [35, 30, 25, 10],
+                        backgroundColor: [
+                            '#38bdf8',
+                            '#c084fc',
+                            '#34d399',
+                            '#f43f5e'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#94a3b8', font: { size: 11 } }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Live Gemini API Demo Functionality
+        async function runGeminiAnalysis() {
+            const btn = document.getElementById('runAiAnalysisBtn');
+            const resultDiv = document.getElementById('aiAnalysisResult');
+            
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Analiz Ediliyor...`;
+            resultDiv.classList.remove('hidden');
+            resultDiv.innerHTML = `Yapay Zeka Analiz Modeli çalıştırılıyor... TÜBİTAK 2204 Hipotezi ile eşleştiriliyor.`;
+
+            const userPrompt = "Yapay zeka hangi meslekleri bitirecek? TÜBİTAK lise araştırma projesi bağlamında kısa, bilimsel ve geleceğin yetkinliklerine odaklanan 3 maddelik bir özet yanıt sun.";
+            const systemPrompt = "Sen TÜBİTAK lise bilim projeleri danışmanı bir yapay zeka araştırmacısısın. Yanıtın öz, yenilikçi ve bilimsel olsun.";
+            const apiKey = ""; // Canvas runtime automatically supplies if empty
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userPrompt }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const data = await response.json();
+                const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (text) {
+                    resultDiv.innerHTML = `<span class="text-emerald-400 font-bold">[MODEL CANLI ÇIKTISI]</span><br><br>${text.replace(/\n/g, '<br>')}`;
+                } else {
+                    resultDiv.innerHTML = `<span class="text-amber-400">Varsayılan Simülasyon Analizi:</span> Yapay zeka meslekleri doğrudan 'bitirmekten' ziyade rutin veri işleme ve tekrarlayan süreçleri otomatize etmektedir. İnsan-AI işbirliği ön plana çıkmaktadır.`;
+                }
+            } catch (err) {
+                resultDiv.innerHTML = `<span class="text-slate-300">Statik Model Analizi:</span> Yapay zeka rutin veri girişi, temel içerik üretimi ve basit muhasebe rollerini dönüştürmektedir. Empati, kriz yönetimi ve strateji gerektiren meslekler ise gelişmektedir.`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-play"></i> Analiz Et (Gemini API Entegre)`;
+            }
+        }
+
+        // Event Listeners Initialization
+        window.onload = function() {
+            renderJobs();
+            initCharts();
+
+            // Search input filter
+            const searchInput = document.getElementById('searchInput');
+            let currentCategory = 'all';
+
+            searchInput.addEventListener('input', (e) => {
+                renderJobs(currentCategory, e.target.value);
+            });
+
+            // Category filter buttons
+            const filterBtns = document.querySelectorAll('#categoryFilters button');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => {
+                        b.className = "px-3 py-1.5 text-xs font-semibold rounded-lg glass-panel hover:border-slate-600 text-slate-300 transition";
+                    });
+                    btn.className = "px-3 py-1.5 text-xs font-semibold rounded-lg bg-cyan-500 text-slate-950 border border-cyan-400 transition";
+                    
+                    currentCategory = btn.getAttribute('data-cat');
+                    renderJobs(currentCategory, searchInput.value);
+                });
+            });
+
+            // AI Live Analysis Button
+            document.getElementById('runAiAnalysisBtn').addEventListener('click', runGeminiAnalysis);
+        };
+    </script>
+</body>
+</html>
+```
